@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="section projects-section">
+        <h2 class="section-title">Projects</h2>
+        
+        <div *ngIf="isLoading" class="text-center p-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+
+        <div *ngIf="!isLoading && !error && projectsList.length === 0" class="text-center p-5">
+          <div class="alert alert-info" role="alert">
+            No projects information available. Please add your projects details.
+          </div>
+        </div>
+
+        <div *ngIf="!isLoading && !error && projectsList.length > 0" class="projects-container">
+          <div class="row">
+            <div *ngFor="let project of projectsList" class="col-md-6 col-lg-4 mb-4">
+              <div class="card project-card h-100">
+                <div class="card-body">
+                  <h3 class="card-title project-title">{{ project.title }}</h3>
+                  <div class="project-date">
+                    <span class="badge bg-secondary">{{ project.startDate | date:'MMM yyyy' }} - {{ project.endDate ? (project.endDate | date:'MMM yyyy') : 'Present' }}</span>
+                  </div>
+                  <p class="card-text project-description">{{ project.description }}</p>
+                  <div class="project-technologies">
+                    <span *ngFor="let tech of project.technologies.split(',')" class="badge bg-primary me-2 mb-2">{{ tech.trim() }}</span>
+                  </div>
+                </div>
+                <div *ngIf="project.url" class="card-footer bg-transparent border-top-0">
+                  <a [href]="project.url" target="_blank" class="btn btn-outline-primary">View Project</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
